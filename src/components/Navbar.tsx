@@ -31,6 +31,7 @@ export default function Navbar() {
   ];
 
   const sectionIds = ['home', 'about', 'collections', 'featured', 'lifestyle', 'app-teaser', 'location'];
+  const MIN_ACTIVE_RATIO = 0.35;
 
   useEffect(() => {
     let sectionObserver: IntersectionObserver | null = null;
@@ -38,22 +39,26 @@ export default function Navbar() {
       sectionObserver = new IntersectionObserver(
         entries => {
           let maxRatio = 0;
-          let activeId = '';
+          let nextSection = '';
 
           entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
             if (entry.intersectionRatio > maxRatio) {
               maxRatio = entry.intersectionRatio;
-              activeId = entry.target.id;
+              nextSection = entry.target.id;
             }
           });
 
-          if (activeId) {
-            setActiveSection(prev => (prev === activeId ? prev : activeId));
+          if (nextSection && maxRatio >= MIN_ACTIVE_RATIO) {
+            setActiveSection(prev => (prev === nextSection ? prev : nextSection));
           }
         },
         {
-          threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-          rootMargin: '-80px 0px -80px 0px'
+          threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
+          rootMargin: '-15% 0px -15% 0px'
         }
       );
 
@@ -75,14 +80,14 @@ export default function Navbar() {
         });
       },
       {
-        threshold: 0.15,
-        rootMargin: '0px 0px -100px 0px'
+        threshold: 0.3,
+        rootMargin: '0px 0px -15% 0px'
       }
     );
 
     const animatedElements = document.querySelectorAll('.reveal');
     animatedElements.forEach(el => {
-      if (el.getBoundingClientRect().top < window.innerHeight) {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.3) {
         el.classList.add('reveal-visible');
       } else {
         animationObserver.observe(el);
