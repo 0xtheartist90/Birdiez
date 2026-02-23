@@ -167,9 +167,11 @@ export const getProductBySlug = (slug: string): Product | undefined => {
 
 export const getProductsByCategory = (category: string): Product[] => {
   if (category === 'all') return products;
+
   return products.filter(p => p.category === category);
 };
 
 export const getFeaturedProducts = (): Product[] => {
+
   return products.filter(p => p.featured);
 };

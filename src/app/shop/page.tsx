@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/lib/products';
 import { X } from 'lucide-react';
 
-export default function ShopPage() {
+function ShopContent() {
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 20000]);
@@ -179,5 +179,13 @@ export default function ShopPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function ShopPage() {
+  return (
+    <Suspense fallback={<div className="section-cream min-h-screen flex items-center justify-center">Loading shop...</div>}>
+      <ShopContent />
+    </Suspense>
   );
 }

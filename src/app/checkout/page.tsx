@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useCart } from '@/lib/cart';
@@ -15,8 +15,13 @@ export default function CheckoutPage() {
   });
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    if (!submitted && items.length === 0) {
+      router.replace('/cart');
+    }
+  }, [items.length, router, submitted]);
+
   if (items.length === 0 && !submitted) {
-    router.push('/cart');
     return null;
   }
 

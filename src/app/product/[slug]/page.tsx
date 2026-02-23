@@ -36,10 +36,12 @@ export default function ProductPage() {
   const handleAddToCart = () => {
     if (product.sizes && product.sizes.length > 0 && !selectedSize) {
       alert('Please select a size');
+
       return;
     }
     if (product.colors && product.colors.length > 0 && !selectedColor) {
       alert('Please select a color');
+
       return;
     }
 
