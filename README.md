@@ -1,10 +1,15 @@
-# Next.js 15 Starter (shadcn) [[LIVE DEMO](https://nextjs-15-starter-shadcn.vercel.app/)]
+# Birdiez - Modern Golf Fashion E-Commerce
 
-> **⚠️ ARCHIVED**: This project has been archived. Please use the [Next.js 16 Starter (shadcn)](https://github.com/siddharthamaity/nextjs-16-starter-shadcn) instead.
+Premium golf shop website for MSport Driving Range in Chiang Mai, Thailand.
 
-![MIT License](https://img.shields.io/badge/license-MIT-blue) [![TypeScript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://typescriptlang.org) ![ESLint](https://img.shields.io/badge/code%20style-eslint-brightgreen) ![GitHub stars](https://img.shields.io/github/stars/siddharthamaity/nextjs-15-starter-shadcn?style=social) ![GitHub forks](https://img.shields.io/github/forks/siddharthamaity/nextjs-15-starter-shadcn?style=social) [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/siddharthamaity)
+## Overview
 
-*This is the Tailwind version for Next.js 15 Starter, you may be interested in other templates too -*
+Birdiez is a fashion-forward golf lifestyle brand featuring:
+- Premium golf apparel and accessories
+- Secondhand clubs and bags
+- Modern, editorial design aesthetic
+- Reserve-in-store checkout flow
+- Community app teaser
 - [**Next.js 15 Starter Core**](https://github.com/SiddharthaMaity/nextjs-15-starter-core)
 - [**Next.js 15 Starter with Tailwind CSS**](https://github.com/SiddharthaMaity/nextjs-15-starter-tailwind)
 
