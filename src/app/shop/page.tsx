@@ -46,6 +46,7 @@ function ShopContent() {
         return false;
       }
       seenImages.add(primaryImage);
+
       return true;
     });
   }, []);
