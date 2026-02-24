@@ -34,6 +34,7 @@ function ShopContent() {
 
   const uniqueProducts = useMemo(() => {
     const seenImages = new Set<string>();
+
     return products.filter(product => {
       if (product.id.startsWith('gen-')) {
         return false;
