@@ -48,25 +48,32 @@ export default function Page() {
     return combined;
   })();
   const highlightProduct = featuredGridProducts.find(product => product.slug === 'golf-cover') ?? featuredGridProducts[0];
-  const secondaryProducts = featuredGridProducts
-    .filter(product => product.id !== highlightProduct?.id)
-    .slice(0, 4);
+  const secondaryPrioritySlugs = ['floral-fairway-polo', 'limited-edition-birdie-cap'];
+  const secondaryProducts = (() => {
+    const candidates = featuredGridProducts.filter(product => product.id !== highlightProduct?.id);
+    const prioritized = secondaryPrioritySlugs
+      .map(slug => candidates.find(product => product.slug === slug))
+      .filter((product): product is NonNullable<typeof product> => Boolean(product));
+    const remainder = candidates.filter(product => !secondaryPrioritySlugs.includes(product.slug));
+
+    return [...prioritized, ...remainder].slice(0, 4);
+  })();
   const bagPositionClasses = ['lg:col-start-1 lg:row-start-4', 'lg:col-start-2 lg:row-start-4'];
   const secondaryPositionClasses = [
-    'lg:col-start-3 lg:row-start-3',
-    'lg:col-start-4 lg:row-start-3',
-    'lg:col-start-3 lg:row-start-4',
-    'lg:col-start-4 lg:row-start-4'
+    'lg:col-start-3 lg:row-start-1',
+    'lg:col-start-4 lg:row-start-1',
+    'lg:col-start-3 lg:row-start-2',
+    'lg:col-start-4 lg:row-start-2'
   ];
   const shopCategories = [
     { slug: 'shirts', label: 'SHIRTS', image: '/images/shirt.png' },
-    { slug: 'pants', label: 'PANTS', image: '/images/pants.jpg' },
     { slug: 'gloves', label: 'GLOVES', image: '/images/gloves.png' },
     {
       slug: 'accessories',
       label: 'ACCESSORIES',
-      image: '/images/birdie%20limited%20edition%20cap.png'
-    }
+      image: '/images/cap.png'
+    },
+    { slug: 'bags', label: 'BAGS', image: '/images/golfbag-black-and-white.jpg' }
   ];
 
   return (
@@ -233,7 +240,7 @@ export default function Page() {
             </div>
 
             {highlightProduct && (
-              <div className="reveal reveal-right lg:col-span-2 lg:row-span-2 lg:col-start-3 lg:row-start-1">
+              <div className="reveal reveal-right lg:col-span-2 lg:row-span-2 lg:col-start-3 lg:row-start-3">
                 <ProductCard product={highlightProduct} />
               </div>
             )}
