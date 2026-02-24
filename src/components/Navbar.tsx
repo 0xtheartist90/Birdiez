@@ -31,7 +31,7 @@ export default function Navbar() {
   ];
 
   const sectionIds = ['home', 'about', 'collections', 'featured', 'lifestyle', 'app-teaser', 'location'];
-  const MIN_ACTIVE_RATIO = 0.35;
+  const MIN_ACTIVE_RATIO = 0.2;
 
   useEffect(() => {
     let sectionObserver: IntersectionObserver | null = null;

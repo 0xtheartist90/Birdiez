@@ -43,7 +43,9 @@ export default function Page() {
     const others = featuredProducts.filter(
       product => !featuredHighlightSlugs.includes(product.slug) && !featuredExclusionSlugs.includes(product.slug)
     );
-    return [...highlights, ...others];
+    const combined = [...highlights, ...others];
+
+    return combined;
   })();
   const highlightProduct = featuredGridProducts.find(product => product.slug === 'golf-cover') ?? featuredGridProducts[0];
   const secondaryProducts = featuredGridProducts
