@@ -9,7 +9,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link href={`/product/${product.slug}`} className="group block h-full">
-      <div className="relative h-full w-full overflow-hidden rounded-2xl bg-[#706C61]/10">
+      <div className="relative h-full w-full min-h-[300px] overflow-hidden rounded-2xl bg-[#706C61]/10">
         <Image
           src={product.images[0]}
           alt={product.name}

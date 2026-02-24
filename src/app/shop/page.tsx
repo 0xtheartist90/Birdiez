@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState, useEffect } from 'react';
+import { Suspense, useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/lib/products';
@@ -22,16 +22,35 @@ function ShopContent() {
 
   const categories = [
     { value: 'all', label: 'All Products' },
-    { value: 'shirts', label: 'Shirts' },
-    { value: 'gloves', label: 'Gloves' },
+    { value: 'shirts', label: 'Apparel' },
+    { value: 'headwear', label: 'Headwear' },
+    { value: 'bags', label: 'Bags' },
+    { value: 'equipment', label: 'Equipment' },
     { value: 'accessories', label: 'Accessories' },
-    { value: 'clubs', label: 'Clubs (Secondhand)' },
-    { value: 'bags', label: 'Bags (Secondhand)' }
+    { value: 'secondhand', label: 'Secondhand Finds' }
   ];
 
   const sizes = ['S', 'M', 'L', 'XL'];
 
-  const filteredProducts = products.filter(product => {
+  const uniqueProducts = useMemo(() => {
+    const seenImages = new Set<string>();
+    return products.filter(product => {
+      if (product.id.startsWith('gen-')) {
+        return false;
+      }
+      const primaryImage = product.images?.[0];
+      if (!primaryImage) {
+        return false;
+      }
+      if (seenImages.has(primaryImage)) {
+        return false;
+      }
+      seenImages.add(primaryImage);
+      return true;
+    });
+  }, []);
+
+  const filteredProducts = uniqueProducts.filter(product => {
     const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
     const priceMatch = product.price >= priceRange[0] && product.price <= priceRange[1];
     const sizeMatch = selectedSizes.length === 0 || 

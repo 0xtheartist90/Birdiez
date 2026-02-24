@@ -2,7 +2,7 @@ export interface Product {
   id: string;
   name: string;
   slug: string;
-  category: 'shirts' | 'gloves' | 'accessories' | 'clubs' | 'bags' | 'pants' | 'training' | 'tees' | 'balls';
+  category: 'shirts' | 'gloves' | 'accessories' | 'clubs' | 'bags' | 'pants' | 'training' | 'tees' | 'balls' | 'headwear' | 'secondhand';
   price: number;
   images: string[];
   sizes?: string[];
@@ -14,20 +14,14 @@ export interface Product {
   care: string[];
 }
 
-const slugify = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)+/g, '');
-
 const baseProducts: Product[] = [
   {
-    id: '1',
+    id: 'app-azure-crest',
     name: 'Azure Crest Polo',
     slug: 'azure-crest-polo',
     category: 'shirts',
     price: 1890,
-    images: ['/images/Blue%20polo.png'],
+    images: ['/images/Shop/Blue%20polo.png'],
     sizes: ['S', 'M', 'L', 'XL'],
     colors: ['Azure', 'White', 'Olive'],
     stock: 15,
@@ -37,12 +31,12 @@ const baseProducts: Product[] = [
     care: ['Machine wash cold', 'Tumble dry low', 'Do not bleach']
   },
   {
-    id: '2',
+    id: 'app-sandstone',
     name: 'Sandstone Polo',
     slug: 'sandstone-polo',
     category: 'shirts',
     price: 1290,
-    images: ['/images/Creme%20polo.png'],
+    images: ['/images/Shop/Creme%20polo.png'],
     sizes: ['S', 'M', 'L', 'XL'],
     colors: ['Cream', 'Matcha', 'Olive'],
     stock: 20,
@@ -52,12 +46,12 @@ const baseProducts: Product[] = [
     care: ['Machine wash cold', 'Hang dry recommended']
   },
   {
-    id: '3',
+    id: 'app-floral-fairway',
     name: 'Floral Fairway Polo',
     slug: 'floral-fairway-polo',
     category: 'shirts',
     price: 1890,
-    images: ['/images/floral%20polo.png'],
+    images: ['/images/Shop/floral%20polo.png'],
     sizes: ['S', 'M', 'L', 'XL'],
     colors: ['Floral', 'Cream', 'Olive'],
     stock: 14,
@@ -67,165 +61,72 @@ const baseProducts: Product[] = [
     care: ['Machine wash cold', 'Dry flat', 'Do not bleach']
   },
   {
-    id: '4',
+    id: 'app-range-shirt',
+    name: 'Heritage Range Shirt',
+    slug: 'heritage-range-shirt',
+    category: 'shirts',
+    price: 1590,
+    images: ['/images/Shop/Blue%20polo.png'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: ['Ivory', 'Olive'],
+    stock: 20,
+    featured: false,
+    description: 'Camp-collar shirt cut in breathable twill for warm afternoons.',
+    details: ['Relaxed block', 'Coconut buttons', 'Side vents'],
+    care: ['Machine wash cold', 'Hang dry']
+  },
+  {
+    id: 'head-script-cap',
+    name: 'Birdiez Script Cap',
+    slug: 'birdiez-script-cap',
+    category: 'headwear',
+    price: 890,
+    images: ['/images/Shop/birdie%20limited%20edition%20cap.png'],
+    sizes: ['One Size'],
+    colors: ['Bone', 'Matcha'],
+    stock: 24,
+    featured: true,
+    description: 'Structured cap with Birdiez script embroidery and contrast underbrim.',
+    details: ['Moisture-wicking sweatband', 'Adjustable strap', 'Raised front embroidery'],
+    care: ['Spot clean only', 'Air dry']
+  },
+  {
+    id: 'secondhand-archive-cap',
+    name: 'Archive Crest Cap (Secondhand)',
+    slug: 'archive-crest-cap-secondhand',
+    category: 'secondhand',
+    price: 650,
+    images: ['/images/Shop/birdie%20limited%20edition%20cap.png'],
+    sizes: ['One Size'],
+    colors: ['Cream'],
+    stock: 5,
+    featured: false,
+    description: 'Lightly worn collectible cap from the first Birdiez drop.',
+    details: ['Original embroidery', 'Minor visor patina', 'Adjustable strap'],
+    care: ['Spot clean only', 'Store in shade']
+  },
+  {
+    id: 'glove-all-weather',
     name: 'All-Weather Glove',
     slug: 'all-weather-glove',
     category: 'gloves',
     price: 690,
-    images: ['/products/glove-3.jpg'],
+    images: ['/images/gloves.png'],
     sizes: ['S', 'M', 'L'],
-    colors: ['Black', 'Grey'],
+    colors: ['White', 'Grey'],
     stock: 18,
     featured: false,
     description: 'Synthetic glove designed for all weather conditions.',
-    details: ['Water-resistant', 'Enhanced grip', 'Durable construction'],
+    details: ['Water-resistant palm', 'Enhanced grip', 'Durable construction'],
     care: ['Machine washable', 'Air dry']
   },
   {
-    id: '5',
-    name: 'Limited Edition Birdie Cap',
-    slug: 'limited-edition-birdie-cap',
-    category: 'accessories',
-    price: 990,
-    images: ['/images/birdie%20limited%20edition%20cap.png'],
-    sizes: ['One Size'],
-    colors: ['Cream', 'Matcha'],
-    stock: 18,
-    featured: true,
-    description: 'Collector cap with tonal embroidery and Birdiez orange underbrim.',
-    details: ['Structured crown', 'Adjustable strap', 'Moisture-wicking sweatband'],
-    care: ['Spot clean only', 'Air dry']
-  },
-  {
-    id: '6',
-    name: 'Golf Towel',
-    slug: 'golf-towel',
-    category: 'accessories',
-    price: 490,
-    images: ['/products/towel-1.jpg'],
-    sizes: ['One Size'],
-    colors: ['Olive', 'Matcha'],
-    stock: 30,
-    featured: false,
-    description: 'Premium microfiber towel with carabiner clip.',
-    details: ['Ultra-absorbent', 'Quick-dry fabric', 'Metal clip attachment'],
-    care: ['Machine wash', 'Tumble dry low']
-  },
-  {
-    id: '7',
-    name: 'Titleist Driver (Used)',
-    slug: 'titleist-driver-used',
-    category: 'clubs',
-    price: 8900,
-    images: ['/products/driver-1.jpg'],
-    stock: 2,
-    featured: true,
-    description: 'Pre-owned Titleist TSi3 driver in excellent condition. 9.5° loft.',
-    details: ['9.5° loft', 'Stiff flex shaft', 'Excellent condition', 'Includes headcover'],
-    care: ['Wipe clean after use', 'Store in headcover']
-  },
-  {
-    id: '8',
-    name: 'Callaway Iron Set (Used)',
-    slug: 'callaway-iron-set-used',
-    category: 'clubs',
-    price: 12900,
-    images: ['/products/irons-1.jpg'],
-    stock: 1,
-    featured: false,
-    description: 'Pre-owned Callaway Apex 21 irons (5-PW). Great condition.',
-    details: ['5-PW (6 clubs)', 'Regular flex', 'Good condition', 'Minor wear'],
-    care: ['Clean grooves regularly', 'Store in dry place']
-  },
-  {
-    id: '9',
-    name: 'Stand Bag (Used)',
-    slug: 'stand-bag-used',
-    category: 'bags',
-    price: 3900,
-    images: ['/products/bag-1.jpg'],
-    stock: 3,
-    featured: false,
-    description: 'Lightweight stand bag with 6 dividers. Gently used.',
-    details: ['6-way divider', 'Multiple pockets', 'Rain hood included', 'Good condition'],
-    care: ['Wipe clean', 'Store in dry area']
-  },
-  {
-    id: '10',
-    name: 'Hybrid Jacket',
-    slug: 'hybrid-jacket',
-    category: 'shirts',
-    price: 3490,
-    images: ['/products/jacket-1.jpg'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    colors: ['Black', 'Navy'],
-    stock: 8,
-    featured: true,
-    description: 'Windproof hybrid jacket for cooler days on the course.',
-    details: ['Wind-resistant front panel', 'Stretch knit sleeves', 'Water-repellent finish'],
-    care: ['Machine wash cold', 'Hang dry']
-  },
-  {
-    id: '11',
-    name: 'Matcha Range Pants',
-    slug: 'matcha-range-pants',
-    category: 'pants',
-    price: 2590,
-    images: ['/images/pants.jpg'],
-    sizes: ['30', '32', '34', '36'],
-    colors: ['Matcha', 'Charcoal'],
-    stock: 22,
-    featured: true,
-    description: 'Lightweight performance pants with a tapered fit for humid Chiang Mai days.',
-    details: ['Moisture-wicking fabric', 'Silicone gripper waistband', 'Tapered athletic fit'],
-    care: ['Machine wash cold', 'Tumble dry low']
-  },
-  {
-    id: '12',
-    name: 'Tempo Putting Gate',
-    slug: 'tempo-putting-gate',
-    category: 'training',
-    price: 1490,
-    images: ['/images/training-aid.jpg'],
-    stock: 25,
-    featured: true,
-    description: 'Aluminum putting gate with alignment pegs for indoor tempo work.',
-    details: ['Adjustable width', 'Non-slip base', 'Includes carry pouch'],
-    care: ['Wipe clean', 'Store in pouch']
-  },
-  {
-    id: '13',
-    name: 'Cinnamon Tees (100 pack)',
-    slug: 'cinnamon-tees',
-    category: 'tees',
-    price: 290,
-    images: ['/images/tees.jpg'],
-    stock: 60,
-    featured: true,
-    description: 'Bamboo tees dipped in Birdiez cinnamon orange for on-course flair.',
-    details: ['Bamboo construction', 'Mixed height pack', 'Biodegradable'],
-    care: ['Store dry']
-  },
-  {
-    id: '14',
-    name: 'Tour Spin Balls (Dozen)',
-    slug: 'tour-spin-balls',
-    category: 'balls',
-    price: 1690,
-    images: ['/images/golf-balls.jpg'],
-    stock: 40,
-    featured: true,
-    description: 'Urethane-covered tour ball tuned for high launch and soft feel.',
-    details: ['3-piece construction', 'Urethane cover', 'Mid-high launch'],
-    care: ['Wipe clean after rounds']
-  },
-  {
-    id: '15',
+    id: 'acc-heritage-cover',
     name: 'Heritage Golf Cover',
     slug: 'golf-cover',
     category: 'accessories',
     price: 2290,
-    images: ['/images/golf-cover.png'],
+    images: ['/images/Shop/golf-cover.png'],
     stock: 12,
     featured: true,
     description: 'Full-grain leather golf cover with contrast Birdiez stitching.',
@@ -233,200 +134,99 @@ const baseProducts: Product[] = [
     care: ['Spot clean only', 'Condition leather seasonally']
   },
   {
-    id: '16',
+    id: 'acc-tees-bundle',
     name: 'Artisan Golf Tees Set',
     slug: 'golf-tees',
     category: 'tees',
     price: 420,
-    images: ['/images/golf-tees.jpg'],
+    images: ['/images/Shop/golf-tees.jpg'],
     stock: 80,
     featured: true,
     description: 'Hand-painted bamboo tees packaged with a leather tee holder.',
     details: ['100 bamboo tees', 'Three tee heights', 'Includes leather holder'],
     care: ['Keep dry between rounds']
-  }
-];
-
-type GeneratorConfig = {
-  baseName: string;
-  category: Product['category'];
-  image: string;
-  basePrice: number;
-  sizes?: string[];
-  colors?: string[];
-  stock: number;
-  description: string;
-  details: string[];
-  care: string[];
-  count: number;
-  featuredEvery?: number;
-};
-
-const generatorConfigs: GeneratorConfig[] = [
-  {
-    baseName: 'Chiang Mai Polo',
-    category: 'shirts',
-    image: '/images/floral%20polo.png',
-    basePrice: 1990,
-    sizes: ['S', 'M', 'L', 'XL'],
-    colors: ['Azure', 'Cream', 'Olive'],
-    stock: 18,
-    description: 'Breathable polo knit inspired by Chiang Mai evenings.',
-    details: ['Soft touch pique', 'Moisture control', 'Relaxed tailoring'],
-    care: ['Machine wash cold', 'Dry flat'],
-    count: 24,
-    featuredEvery: 7
   },
   {
-    baseName: 'Range Essentials Pants',
-    category: 'pants',
-    image: '/images/pants.jpg',
-    basePrice: 2490,
-    sizes: ['28', '30', '32', '34', '36'],
-    colors: ['Matcha', 'Stone'],
-    stock: 20,
-    description: 'Stretch-woven pants with a tapered profile for year-round play.',
-    details: ['4-way stretch', 'Anti-slip waistband', 'Hidden zip pocket'],
-    care: ['Machine wash cold', 'Tumble dry low'],
-    count: 20,
-    featuredEvery: 6
-  },
-  {
-    baseName: 'Tempo Trainer',
-    category: 'training',
-    image: '/images/training-aid.jpg',
-    basePrice: 1590,
-    stock: 24,
-    description: 'Training aid crafted to keep tempo crisp during home sessions.',
-    details: ['Adjustable resistance', 'Compact design', 'Indoor/outdoor use'],
-    care: ['Wipe clean', 'Store indoors'],
-    count: 20,
-    featuredEvery: 5
-  },
-  {
-    baseName: 'Bamboo Tees Bundle',
-    category: 'tees',
-    image: '/images/tees.jpg',
-    basePrice: 220,
-    stock: 70,
-    description: 'Biodegradable tees dipped in Birdiez signature hues.',
-    details: ['100 pack', 'Mixed heights', 'Durable bamboo'],
-    care: ['Store in dry pouch'],
-    count: 20,
-    featuredEvery: 8
-  },
-  {
-    baseName: 'Tour Strike Balls',
-    category: 'balls',
-    image: '/images/golf-balls.jpg',
-    basePrice: 1590,
-    stock: 36,
-    description: 'Spin-friendly urethane balls for competitive rounds.',
-    details: ['Cast urethane cover', 'Triple track stamp', 'Mid launch profile'],
-    care: ['Wipe after each round'],
-    count: 20,
-    featuredEvery: 4
-  },
-  {
-    baseName: 'Grip Lock Glove',
-    category: 'gloves',
-    image: '/images/gloves.png',
-    basePrice: 740,
-    sizes: ['S', 'M', 'L'],
-    colors: ['White', 'Black'],
-    stock: 20,
-    description: 'Cabretta feel glove with weather-resistant panels.',
-    details: ['Perforated fingers', 'Dual closure tab', 'Drytac palm'],
-    care: ['Air dry only', 'Spot clean'],
-    count: 18,
-    featuredEvery: 6
-  },
-  {
-    baseName: 'Fairway Utility Kit',
+    id: 'acc-leather-kit',
+    name: 'Leather Tee Holder Kit',
+    slug: 'leather-tee-holder-kit',
     category: 'accessories',
-    image: '/images/cap.png',
-    basePrice: 850,
-    stock: 28,
-    description: 'Essential accessories bundle for weeknight range sessions.',
-    details: ['Structured cap', 'Cooling towel', 'Divot tool'],
-    care: ['Spot clean cap', 'Machine wash towel'],
-    count: 15,
-    featuredEvery: 5
+    price: 1590,
+    images: ['/images/Shop/leather%20tee%20holder.jpg'],
+    stock: 14,
+    featured: false,
+    description: 'Premium leather tee wallet bundled with hand-dipped tees.',
+    details: ['Full-grain leather', 'Magnetic snap', 'Includes 25 tees'],
+    care: ['Spot clean', 'Condition leather seasonally']
   },
   {
-    baseName: 'Player Series Club',
-    category: 'clubs',
-    image: '/products/driver-1.jpg',
-    basePrice: 9400,
-    stock: 4,
-    description: 'Tour-proven metalwoods and irons sourced locally.',
-    details: ['Certified used', 'Includes headcover', 'Premium shaft options'],
-    care: ['Wipe clean', 'Store in dry area'],
-    count: 10,
-    featuredEvery: 5
+    id: 'train-tempo',
+    name: 'Tempo Swing Trainer',
+    slug: 'tempo-swing-trainer',
+    category: 'training',
+    price: 1890,
+    images: ['/images/Shop/training-aid-swingspeed.jpg'],
+    stock: 20,
+    featured: true,
+    description: 'Compact tempo trainer for dialing in rhythm at home.',
+    details: ['Adjustable weight', 'Grip alignment guide', 'Carry sleeve included'],
+    care: ['Wipe clean after sessions', 'Store indoors']
   },
   {
-    baseName: 'Field Carry Bag',
+    id: 'balls-tour-spin',
+    name: 'Tour Spin Balls (Dozen)',
+    slug: 'tour-spin-balls',
+    category: 'balls',
+    price: 1690,
+    images: ['/images/Shop/golfballsbirdiez.png'],
+    stock: 36,
+    featured: true,
+    description: 'Urethane-covered tour ball tuned for high launch and soft feel.',
+    details: ['3-piece construction', 'Urethane cover', 'Mid-high launch'],
+    care: ['Wipe clean after rounds']
+  },
+  {
+    id: 'bags-bold-cart',
+    name: 'Bold Cart Bag 01',
+    slug: 'bold-cart-bag-01',
     category: 'bags',
-    image: '/products/bag-1.jpg',
-    basePrice: 4200,
-    stock: 6,
-    description: 'Featherweight stand bags tuned for scooter commutes.',
-    details: ['5-way divider', 'Waterproof bottom', 'Dual strap harness'],
-    care: ['Wipe clean', 'Store in shade'],
-    count: 6,
-    featuredEvery: 3
-  },
-  {
-    baseName: 'Bold Cart Bag',
-    category: 'bags',
-    image: '/images/red-bag.png',
-    basePrice: 3500,
-    stock: 10,
+    price: 3500,
+    images: ['/images/Shop/red-bag.png'],
+    stock: 8,
+    featured: true,
     description: 'Statement cart bag finished in Birdiez bold red with tonal branding.',
     details: ['14-way divider', 'Magnetic rangefinder pocket', 'Rain hood'],
-    care: ['Spot clean only', 'Store in dry area'],
-    count: 1,
-    featuredEvery: 1
+    care: ['Spot clean only', 'Store in dry area']
   },
   {
-    baseName: 'Palm Stand Bag',
+    id: 'bags-palm-stand',
+    name: 'Palm Stand Bag 01',
+    slug: 'palm-stand-bag-01',
     category: 'bags',
-    image: '/images/green-bag.png',
-    basePrice: 3500,
+    price: 3500,
+    images: ['/images/Shop/green-bag.png'],
     stock: 10,
+    featured: true,
     description: 'Forest green stand bag built for scooter commutes and compact lockers.',
     details: ['Carbon legs', 'Velvet-lined valuables pocket', 'Weight 1.8kg'],
-    care: ['Spot clean only', 'Air dry'],
-    count: 1,
-    featuredEvery: 1
+    care: ['Spot clean only', 'Air dry']
+  },
+  {
+    id: 'bags-heritage-carry',
+    name: 'Heritage Carry Bag',
+    slug: 'heritage-carry-bag',
+    category: 'bags',
+    price: 3200,
+    images: ['/images/golfbag-black-and-white.jpg'],
+    stock: 6,
+    featured: false,
+    description: 'Monochrome carry bag inspired by mid-century tour silhouettes.',
+    details: ['Padded single strap', 'Water-resistant panels', 'Velvet-lined pocket'],
+    care: ['Spot clean', 'Air dry fully']
   }
 ];
 
-const generatedProducts: Product[] = generatorConfigs.flatMap((config, configIdx) =>
-  Array.from({ length: config.count }, (_, itemIdx) => {
-    const seq = itemIdx + 1;
-    const name = `${config.baseName} ${seq.toString().padStart(2, '0')}`;
-
-    return {
-      id: `gen-${configIdx + 1}-${seq}`,
-      name,
-      slug: slugify(name),
-      category: config.category,
-      price: config.basePrice + (itemIdx % 4) * 70,
-      images: [config.image],
-      sizes: config.sizes,
-      colors: config.colors,
-      stock: Math.max(4, config.stock - (itemIdx % 5)),
-      featured: config.featuredEvery ? seq % config.featuredEvery === 0 : false,
-      description: config.description,
-      details: config.details,
-      care: config.care
-    };
-  })
-);
-
-export const products: Product[] = [...baseProducts, ...generatedProducts];
+export const products: Product[] = baseProducts;
 
 export const getProductBySlug = (slug: string): Product | undefined => {
   return products.find(p => p.slug === slug);

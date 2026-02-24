@@ -48,15 +48,38 @@ export default function Page() {
     return combined;
   })();
   const highlightProduct = featuredGridProducts.find(product => product.slug === 'golf-cover') ?? featuredGridProducts[0];
-  const secondaryPrioritySlugs = ['floral-fairway-polo', 'limited-edition-birdie-cap'];
+  const secondaryPrioritySlugs = ['birdiez-script-cap', 'floral-fairway-polo'];
+  const secondarySlotOverrides: Record<string, number> = {
+    'birdiez-script-cap': 1,
+    'floral-fairway-polo': 3
+  };
   const secondaryProducts = (() => {
     const candidates = featuredGridProducts.filter(product => product.id !== highlightProduct?.id);
     const prioritized = secondaryPrioritySlugs
       .map(slug => candidates.find(product => product.slug === slug))
       .filter((product): product is NonNullable<typeof product> => Boolean(product));
     const remainder = candidates.filter(product => !secondaryPrioritySlugs.includes(product.slug));
+    const ordered = [...prioritized, ...remainder];
+    const slots: (typeof ordered[number] | null)[] = new Array(4).fill(null);
 
-    return [...prioritized, ...remainder].slice(0, 4);
+    ordered.forEach(product => {
+      const slotIndex = secondarySlotOverrides[product.slug];
+      if (typeof slotIndex === 'number' && slotIndex >= 0 && slotIndex < slots.length && !slots[slotIndex]) {
+        slots[slotIndex] = product;
+      }
+    });
+
+    ordered.forEach(product => {
+      if (typeof secondarySlotOverrides[product.slug] === 'number') {
+        return;
+      }
+      const emptyIndex = slots.findIndex(item => item === null);
+      if (emptyIndex !== -1) {
+        slots[emptyIndex] = product;
+      }
+    });
+
+    return slots.filter((product): product is NonNullable<typeof product> => Boolean(product));
   })();
   const bagPositionClasses = ['lg:col-start-1 lg:row-start-4', 'lg:col-start-2 lg:row-start-4'];
   const secondaryPositionClasses = [
@@ -66,14 +89,10 @@ export default function Page() {
     'lg:col-start-4 lg:row-start-2'
   ];
   const shopCategories = [
-    { slug: 'shirts', label: 'SHIRTS', image: '/images/shirt.png' },
-    { slug: 'gloves', label: 'GLOVES', image: '/images/gloves.png' },
-    {
-      slug: 'accessories',
-      label: 'ACCESSORIES',
-      image: '/images/cap.png'
-    },
-    { slug: 'bags', label: 'BAGS', image: '/images/golfbag-black-and-white.jpg' }
+    { slug: 'shirts', label: 'APPAREL', image: '/images/shirt.png' },
+    { slug: 'headwear', label: 'HEADWEAR', image: '/images/cap.png' },
+    { slug: 'bags', label: 'BAGS', image: '/images/golfbag%20birdiez.png' },
+    { slug: 'accessories', label: 'ACCESSORIES', image: '/images/gloves.png' }
   ];
 
   return (
