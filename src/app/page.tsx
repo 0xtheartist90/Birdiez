@@ -367,27 +367,9 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="location" className="section-anchor section-cream cream-overlay py-24">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
-          <SectionHeader
-            label="Location"
-            title={(
-              <>
-                VISIT
-                <br />
-                THE SHOP
-              </>
-            )}
-            subtitle="Inside MSport Driving Range."
-          />
-
-          <div className="space-y-4 text-lg mb-8">
-            <p className="font-bold text-2xl reveal reveal-up reveal-delay-3">MSport Driving Range</p>
-            <p className="reveal reveal-up reveal-delay-4">Chiang Mai, Thailand</p>
-            <p className="text-sm opacity-70 reveal reveal-up reveal-delay-5">Open Daily: 8:00 AM - 8:00 PM</p>
-          </div>
-
-          <div className="aspect-video rounded-2xl overflow-hidden bg-[#706C61]/10 flex items-center justify-center reveal reveal-scale">
+      <section id="location" className="section-anchor section-cream cream-overlay pt-0 pb-0">
+        <div className="reveal reveal-scale">
+          <div className="w-full aspect-[24/9] lg:aspect-[24/7] overflow-hidden rounded-none">
             <video
               autoPlay
               loop
@@ -398,14 +380,37 @@ export default function Page() {
               <source src="/images/Msport.webm" type="video/webm" />
             </video>
           </div>
+        </div>
 
-          <div className="mt-8 reveal reveal-up reveal-delay-2">
-            <Link
-              href="#"
-              className="inline-block accent-bg px-8 py-4 rounded-xl font-bold hover:scale-105 transition-transform duration-300"
-            >
-              Get Directions
-            </Link>
+        <div className="mx-auto max-w-6xl px-6 lg:px-8 mt-10">
+          <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
+            <div className="flex-1">
+              <SectionHeader
+                label="Location"
+                title={(
+                  <>
+                    VISIT
+                    <br />
+                    THE SHOP
+                  </>
+                )}
+                subtitle="Inside MSport Driving Range."
+                align="left"
+              />
+            </div>
+
+            <div className="w-full lg:max-w-sm bg-[#706C61] text-[#EFE9DC] border border-[#706C61]/10 rounded-2xl p-6 space-y-4 text-left shadow-[0_15px_45px_rgba(10,10,10,0.12)]">
+              <div className="reveal reveal-up">
+                <p className="text-xs uppercase tracking-[0.3em] text-[var(--accent)]">Address</p>
+                <p className="font-bold text-xl mt-1">MSport Driving Range</p>
+                <p className="text-sm opacity-80">Chiang Mai, Thailand</p>
+              </div>
+              <div className="reveal reveal-up reveal-delay-1">
+                <p className="text-xs uppercase tracking-[0.3em] text-[var(--accent)]">Opening Hours</p>
+                <p className="text-sm font-semibold mt-1">Daily • 8:00 AM – 8:00 PM</p>
+                <p className="text-sm opacity-80">Walk-ins welcome · Reserve for fittings</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
