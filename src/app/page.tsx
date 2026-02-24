@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import ProductCard from '@/components/ProductCard';
-import { getFeaturedProducts } from '@/lib/products';
+import { getFeaturedProducts, getProductBySlug } from '@/lib/products';
 
 type SectionHeaderProps = {
   label: string;
@@ -30,6 +30,42 @@ const SectionHeader = ({ label, title, subtitle, align = 'center', animated = tr
 
 export default function Page() {
   const featuredProducts = getFeaturedProducts();
+  const bagFeatureSlugs = ['bold-cart-bag-01', 'palm-stand-bag-01'];
+  const featuredHighlightSlugs = ['golf-cover'];
+  const featuredExclusionSlugs = ['golf-tees'];
+  const bagFeatureProducts = bagFeatureSlugs
+    .map(slug => getProductBySlug(slug))
+    .filter((product): product is NonNullable<typeof product> => Boolean(product));
+  const featuredGridProducts = (() => {
+    const highlights = featuredHighlightSlugs
+      .map(slug => featuredProducts.find(product => product.slug === slug))
+      .filter((product): product is NonNullable<typeof product> => Boolean(product));
+    const others = featuredProducts.filter(
+      product => !featuredHighlightSlugs.includes(product.slug) && !featuredExclusionSlugs.includes(product.slug)
+    );
+    return [...highlights, ...others];
+  })();
+  const highlightProduct = featuredGridProducts.find(product => product.slug === 'golf-cover') ?? featuredGridProducts[0];
+  const secondaryProducts = featuredGridProducts
+    .filter(product => product.id !== highlightProduct?.id)
+    .slice(0, 4);
+  const bagPositionClasses = ['lg:col-start-1 lg:row-start-4', 'lg:col-start-2 lg:row-start-4'];
+  const secondaryPositionClasses = [
+    'lg:col-start-3 lg:row-start-3',
+    'lg:col-start-4 lg:row-start-3',
+    'lg:col-start-3 lg:row-start-4',
+    'lg:col-start-4 lg:row-start-4'
+  ];
+  const shopCategories = [
+    { slug: 'shirts', label: 'SHIRTS', image: '/images/shirt.png' },
+    { slug: 'pants', label: 'PANTS', image: '/images/pants.jpg' },
+    { slug: 'gloves', label: 'GLOVES', image: '/images/gloves.png' },
+    {
+      slug: 'accessories',
+      label: 'ACCESSORIES',
+      image: '/images/birdie%20limited%20edition%20cap.png'
+    }
+  ];
 
   return (
     <main>
@@ -139,51 +175,35 @@ export default function Page() {
             subtitle="Curated for Chiang Mai golfers."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Link href="/shop?category=shirts" className="group relative aspect-[3/4] rounded-2xl overflow-hidden reveal reveal-up">
-              <Image
-                src="/images/shirt.png"
-                alt="Shirts"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-8 left-8">
-                <h3 className="text-4xl font-black uppercase text-white tracking-tight">SHIRTS</h3>
-              </div>
-            </Link>
-
-            <Link href="/shop?category=gloves" className="group relative aspect-[3/4] rounded-2xl overflow-hidden reveal reveal-up reveal-delay-1">
-              <Image
-                src="/images/gloves.png"
-                alt="Gloves"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-8 left-8">
-                <h3 className="text-4xl font-black uppercase text-white tracking-tight">GLOVES</h3>
-              </div>
-            </Link>
-
-            <Link href="/shop?category=accessories" className="group relative aspect-[3/4] rounded-2xl overflow-hidden reveal reveal-up reveal-delay-2">
-              <Image
-                src="/images/cap.png"
-                alt="Accessories"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-8 left-8">
-                <h3 className="text-4xl font-black uppercase text-white tracking-tight">ACCESSORIES</h3>
-              </div>
-            </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {shopCategories.map((category, idx) => (
+              <Link
+                key={category.slug}
+                href={`/shop?category=${category.slug}`}
+                className={`group relative aspect-[3/4] rounded-2xl overflow-hidden reveal reveal-up ${
+                  idx % 4 === 1 ? 'reveal-delay-1' : idx % 4 === 2 ? 'reveal-delay-2' : idx % 4 === 3 ? 'reveal-delay-3' : ''
+                }`}
+              >
+                <Image
+                  src={category.image}
+                  alt={category.label}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-8 left-8">
+                  <h3 className="text-3xl font-black uppercase text-white tracking-tight max-w-[10ch]">
+                    {category.label}
+                  </h3>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      <section id="featured" className="section-anchor section-cream cream-overlay py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <section id="featured" className="section-anchor section-cream cream-overlay py-20">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 space-y-8">
           <SectionHeader
             label="Featured"
             title={(
@@ -196,21 +216,49 @@ export default function Page() {
             subtitle="Limited pieces available in store."
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredProducts.slice(0, 4).map((product, idx) => (
-              <div key={product.id} className={`reveal reveal-up ${idx === 1 ? 'reveal-delay-1' : ''} ${idx === 2 ? 'reveal-delay-2' : ''} ${idx === 3 ? 'reveal-delay-3' : ''}`}>
+          <div className="grid gap-4 lg:gap-x-4 lg:gap-y-2 lg:grid-cols-4 lg:[grid-template-rows:repeat(4,_minmax(0,_1fr))]">
+            <div className="reveal reveal-left rounded-3xl overflow-hidden shadow-[0_25px_70px_rgba(10,10,10,0.2)] h-full min-h-[260px] lg:col-span-2 lg:row-span-3">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster="/images/birdiez%20shop.png"
+                className="w-full h-full object-cover"
+              >
+                <source src="/images/golfbagbold.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            {highlightProduct && (
+              <div className="reveal reveal-right lg:col-span-2 lg:row-span-2 lg:col-start-3 lg:row-start-1">
+                <ProductCard product={highlightProduct} />
+              </div>
+            )}
+
+            {secondaryProducts.map((product, idx) => (
+              <div
+                key={product.id}
+                className={`reveal reveal-up ${idx === 1 ? 'reveal-delay-1' : ''} ${idx === 2 ? 'reveal-delay-2' : ''} ${idx === 3 ? 'reveal-delay-3' : ''} ${secondaryPositionClasses[idx] ?? ''}`}
+              >
                 <ProductCard product={product} />
               </div>
             ))}
-          </div>
 
-          <div className="text-center mt-12 reveal reveal-up reveal-delay-2">
-            <Link
-              href="/shop"
-              className="inline-block accent-bg px-8 py-4 rounded-xl font-bold hover:scale-105 transition-transform duration-300"
-            >
-              View All Products
-            </Link>
+            {bagFeatureProducts.slice(0, 2).map((product, idx) => (
+              <div
+                key={product.id}
+                className={`reveal reveal-up ${idx ? 'reveal-delay-2' : 'reveal-delay-1'} ${bagPositionClasses[idx] ?? ''}`}
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+
+            {bagFeatureProducts.length === 0 && (
+              <div className="reveal reveal-up lg:col-span-2 lg:row-start-4 rounded-2xl border border-dashed border-white/30 p-6 text-center text-sm text-white/70">
+                Bag products coming soon.
+              </div>
+            )}
           </div>
         </div>
       </section>

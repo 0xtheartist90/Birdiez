@@ -1,5 +1,17 @@
 import Link from 'next/link';
 
+const shopCategories = [
+  { slug: 'shirts', label: 'Shirts' },
+  { slug: 'pants', label: 'Pants' },
+  { slug: 'gloves', label: 'Gloves' },
+  { slug: 'accessories', label: 'Accessories' },
+  { slug: 'training', label: 'Training Aids' },
+  { slug: 'balls', label: 'Golf Balls' },
+  { slug: 'tees', label: 'Tees' },
+  { slug: 'clubs', label: 'Clubs (Secondhand)' },
+  { slug: 'bags', label: 'Bags (Secondhand)' }
+];
+
 export default function Footer() {
   return (
     <footer className="section-coal py-16">
@@ -8,11 +20,13 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Shop</h3>
             <ul className="space-y-2">
-              <li><Link href="/shop?category=shirts" className="opacity-80 hover:opacity-100 transition-opacity">Shirts</Link></li>
-              <li><Link href="/shop?category=gloves" className="opacity-80 hover:opacity-100 transition-opacity">Gloves</Link></li>
-              <li><Link href="/shop?category=accessories" className="opacity-80 hover:opacity-100 transition-opacity">Accessories</Link></li>
-              <li><Link href="/shop?category=clubs" className="opacity-80 hover:opacity-100 transition-opacity">Clubs (Secondhand)</Link></li>
-              <li><Link href="/shop?category=bags" className="opacity-80 hover:opacity-100 transition-opacity">Bags (Secondhand)</Link></li>
+              {shopCategories.map(category => (
+                <li key={category.slug}>
+                  <Link href={`/shop?category=${category.slug}`} className="opacity-80 hover:opacity-100 transition-opacity">
+                    {category.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
