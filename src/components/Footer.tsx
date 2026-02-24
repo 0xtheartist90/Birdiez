@@ -1,67 +1,130 @@
+import Image from 'next/image';
 import Link from 'next/link';
+import { Facebook, Instagram } from 'lucide-react';
 
-const shopCategories = [
-  { slug: 'shirts', label: 'Shirts' },
-  { slug: 'pants', label: 'Pants' },
-  { slug: 'gloves', label: 'Gloves' },
-  { slug: 'accessories', label: 'Accessories' },
-  { slug: 'training', label: 'Training Aids' },
-  { slug: 'balls', label: 'Golf Balls' },
-  { slug: 'tees', label: 'Tees' },
-  { slug: 'clubs', label: 'Clubs (Secondhand)' },
-  { slug: 'bags', label: 'Bags (Secondhand)' }
-];
+const footerNav = {
+  shop: [
+    { slug: 'shirts', label: 'Apparel' },
+    { slug: 'headwear', label: 'Headwear' },
+    { slug: 'bags', label: 'Bags' },
+    { slug: 'equipment', label: 'Equipment' },
+    { slug: 'accessories', label: 'Accessories' },
+    { slug: 'secondhand', label: 'Secondhand Finds' }
+  ],
+  community: [{ href: '#app-teaser', label: 'Join the App' }]
+};
 
 export default function Footer() {
   return (
-    <footer className="section-coal py-16">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div>
-            <h3 className="font-bold text-lg mb-4">Shop</h3>
-            <ul className="space-y-2">
-              {shopCategories.map(category => (
-                <li key={category.slug}>
-                  <Link href={`/shop?category=${category.slug}`} className="opacity-80 hover:opacity-100 transition-opacity">
-                    {category.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+    <footer className="bg-[#1B1B1A] text-[#EFE9DC] text-xs">
+      <div className="mx-auto max-w-7xl px-4 lg:px-6 py-7 space-y-4">
+        <div className="grid gap-y-5 lg:gap-y-0 lg:gap-x-24 grid-cols-1 lg:grid-cols-[auto_minmax(0,1fr)] items-start">
+          <div className="flex flex-col lg:flex-row items-center lg:items-center gap-4 lg:gap-6 shrink-0 max-w-sm">
+            <Image src="/images/LOGO%20White.png" alt="Birdiez white logo" width={200} height={72} className="w-48 h-auto" />
+
+            <div className="space-y-2 text-center lg:text-left">
+              <div className="flex justify-center lg:justify-start gap-2">
+                <Link
+                  href="https://www.instagram.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-1.5 rounded-full border border-[var(--accent)] hover:bg-[var(--accent)]/10 transition-all"
+                  aria-label="Follow on Instagram"
+                >
+                  <Instagram className="h-4 w-4 text-white" />
+                </Link>
+                <Link
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-1.5 rounded-full border border-[var(--accent)] hover:bg-[var(--accent)]/10 transition-all"
+                  aria-label="Follow on Facebook"
+                >
+                  <Facebook className="h-4 w-4 text-white" />
+                </Link>
+              </div>
+              <p className="text-xs font-semibold tracking-wide text-[#EFE9DC]">hello@birdiez.club</p>
+            </div>
           </div>
 
-          <div>
-            <h3 className="font-bold text-lg mb-4">Company</h3>
-            <ul className="space-y-2">
-              <li><Link href="#" className="opacity-80 hover:opacity-100 transition-opacity">About</Link></li>
-              <li><Link href="#" className="opacity-80 hover:opacity-100 transition-opacity">Contact</Link></li>
-              <li><Link href="#" className="opacity-80 hover:opacity-100 transition-opacity">Returns</Link></li>
-              <li><Link href="#" className="opacity-80 hover:opacity-100 transition-opacity">Privacy</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-lg mb-4">Location</h3>
-            <p className="opacity-80">
-              MSport Driving Range<br />
-              Chiang Mai, Thailand
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-lg mb-4">Community</h3>
-            <ul className="space-y-2">
-              <li><Link href="#" className="opacity-80 hover:opacity-100 transition-opacity">Instagram</Link></li>
-              <li><Link href="#" className="opacity-80 hover:opacity-100 transition-opacity">Facebook</Link></li>
-              <li><Link href="#app-teaser" className="opacity-80 hover:opacity-100 transition-opacity">Join the App</Link></li>
-            </ul>
+          <div className="flex flex-wrap gap-8 lg:gap-16 justify-end">
+            <div className="min-w-[200px]">
+              <ShopColumn />
+            </div>
+            <div className="min-w-[160px]">
+              <FooterColumn title="Community" links={footerNav.community} external compact />
+            </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-[#EFE9DC]/20 text-center opacity-60 text-sm">
-          <p>&copy; {new Date().getFullYear()} Birdiez. All rights reserved.</p>
+        <div className="flex flex-col items-center gap-2 border-t border-white/10 pt-3 text-center">
+          <p
+            className="text-[var(--accent)] tracking-wide"
+            style={{ fontFamily: 'Valentine Delight Script, cursive', letterSpacing: '0.08em', fontSize: 'clamp(1rem, 1.8vw, 1.35rem)' }}
+          >
+            Built by players for the community.
+          </p>
+          <p className="text-[#EFE9DC]/60">&copy; {new Date().getFullYear()} Birdiez</p>
         </div>
       </div>
     </footer>
   );
 }
+
+const ShopColumn = () => {
+  const columns: typeof footerNav.shop[] = [];
+  for (let i = 0; i < footerNav.shop.length; i += 2) {
+    columns.push(footerNav.shop.slice(i, i + 2));
+  }
+
+  return (
+    <div>
+      <h3 className="font-semibold text-base mb-2">Shop</h3>
+      <div className="grid grid-cols-3 gap-3">
+        {columns.map((col, colIdx) => (
+          <ul key={colIdx} className="space-y-1">
+            {col.map(link => (
+              <li key={link.slug}>
+                <Link
+                  href={`/shop?category=${link.slug}`}
+                  className="text-[#EFE9DC]/80 hover:text-white transition-colors"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+type FooterColumnProps = {
+  title: string;
+  links: { href: string; label: string }[];
+  external?: boolean;
+  compact?: boolean;
+};
+
+const FooterColumn = ({ title, links, external, compact }: FooterColumnProps) => {
+  return (
+    <div>
+      <h3 className={`font-semibold ${compact ? 'text-base' : 'text-lg'} mb-2`}>{title}</h3>
+      <ul className={`space-y-1 ${compact ? 'text-xs' : 'text-sm'}`}>
+        {links.map(link => (
+          <li key={link.label}>
+            <Link
+              href={link.href}
+              className="text-[#EFE9DC]/80 hover:text-white transition-colors"
+              target={external && link.href.startsWith('http') ? '_blank' : undefined}
+              rel={external && link.href.startsWith('http') ? 'noreferrer' : undefined}
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};

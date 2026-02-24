@@ -57,8 +57,9 @@ export default function Page() {
     return combined;
   })();
   const highlightProduct = featuredGridProducts.find(product => product.slug === 'golf-cover') ?? featuredGridProducts[0];
-  const secondaryPrioritySlugs = ['birdiez-script-cap', 'floral-fairway-polo'];
+  const secondaryPrioritySlugs = ['birdie-logo-cap-mint', 'birdiez-script-cap', 'floral-fairway-polo'];
   const secondarySlotOverrides: Record<string, number> = {
+    'birdie-logo-cap-mint': 0,
     'birdiez-script-cap': 1,
     'floral-fairway-polo': 3
   };

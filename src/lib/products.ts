@@ -25,7 +25,7 @@ const baseProducts: Product[] = [
     sizes: ['S', 'M', 'L', 'XL'],
     colors: ['Azure', 'White', 'Olive'],
     stock: 15,
-    featured: true,
+    featured: false,
     description: 'Moisture-wicking performance polo in a cool azure tone built for Chiang Mai heat.',
     details: ['4-way stretch fabric', 'UV protection', 'Breathable mesh panels', 'Modern slim fit'],
     care: ['Machine wash cold', 'Tumble dry low', 'Do not bleach']
@@ -40,7 +40,7 @@ const baseProducts: Product[] = [
     sizes: ['S', 'M', 'L', 'XL'],
     colors: ['Cream', 'Matcha', 'Olive'],
     stock: 20,
-    featured: true,
+    featured: false,
     description: 'Cream-toned range staple with a buttery handfeel for all-day comfort.',
     details: ['100% organic cotton', 'Relaxed fit', 'Reinforced stitching'],
     care: ['Machine wash cold', 'Hang dry recommended']
@@ -70,7 +70,7 @@ const baseProducts: Product[] = [
     sizes: ['S', 'M', 'L', 'XL'],
     colors: ['Mint', 'Cream'],
     stock: 12,
-    featured: true,
+    featured: false,
     description: 'Lightweight canvas layer for breezy Chiang Mai mornings.',
     details: ['Two-way zip', 'Side vents', 'Hidden scorecard pocket'],
     care: ['Machine wash cold', 'Hang dry in shade']
@@ -85,7 +85,7 @@ const baseProducts: Product[] = [
     sizes: ['S', 'M', 'L', 'XL'],
     colors: ['Pink', 'Bone'],
     stock: 10,
-    featured: false,
+    featured: true,
     description: 'Soft-touch canvas jacket dyed in Birdiez lotus tones.',
     details: ['Matte snaps', 'Interior stash pocket', 'Relaxed fit'],
     care: ['Machine wash delicate', 'Hang dry']
@@ -235,7 +235,7 @@ const baseProducts: Product[] = [
     sizes: ['One Size'],
     colors: ['Mint'],
     stock: 20,
-    featured: false,
+    featured: true,
     description: 'Classic Birdie mascot cap in a mint palette.',
     details: ['Raised mascot embroidery', 'Adjustable strap', 'Sweat-wicking band'],
     care: ['Spot clean only']
