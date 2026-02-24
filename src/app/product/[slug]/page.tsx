@@ -100,7 +100,7 @@ export default function ProductPage() {
                 {product.category}
               </p>
               <h1 className="text-4xl font-black mb-2">{product.name}</h1>
-              <p className="serif-subtext">{product.description}</p>
+              <p className="text-base md:text-lg text-[#4A4A44] leading-relaxed opacity-90">{product.description}</p>
             </div>
 
             <div className="text-3xl font-bold">

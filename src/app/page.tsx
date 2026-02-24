@@ -10,20 +10,29 @@ type SectionHeaderProps = {
   subtitle?: string;
   align?: 'left' | 'center';
   animated?: boolean;
+  subtitleClassName?: string;
 };
 
-const SectionHeader = ({ label, title, subtitle, align = 'center', animated = true }: SectionHeaderProps) => {
+const SectionHeader = ({
+  label,
+  title,
+  subtitle,
+  align = 'center',
+  animated = true,
+  subtitleClassName
+}: SectionHeaderProps) => {
   const alignmentClass = align === 'center' ? 'text-center' : 'text-left';
   const spacingClass = align === 'center' ? 'mb-16' : 'mb-10';
   const labelClass = animated ? 'reveal reveal-down' : '';
   const titleClass = animated ? 'reveal reveal-up reveal-delay-1' : '';
   const subtitleClass = animated ? 'reveal reveal-up reveal-delay-2' : '';
+  const subtitleBaseClass = subtitleClassName ?? 'script-accent';
 
   return (
     <div className={`${alignmentClass} ${spacingClass} space-y-3`}>
       <p className={`text-sm uppercase tracking-[0.3em] text-[var(--accent)] ${labelClass}`}>{label}</p>
       <h2 className={`section-title ${titleClass}`}>{title}</h2>
-      {subtitle && <p className={`script-accent ${subtitleClass}`}>{subtitle}</p>}
+      {subtitle && <p className={`${subtitleBaseClass} ${subtitleClass}`}>{subtitle}</p>}
     </div>
   );
 };
@@ -414,6 +423,7 @@ export default function Page() {
                   </>
                 )}
                 subtitle="Inside MSport Driving Range."
+                subtitleClassName="text-base md:text-xl font-semibold tracking-tight text-[#706C61]"
                 align="left"
               />
             </div>
