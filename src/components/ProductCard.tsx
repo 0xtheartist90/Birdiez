@@ -4,12 +4,15 @@ import type { Product } from '@/lib/products';
 
 interface ProductCardProps {
   product: Product;
+  forceSquareOnMobile?: boolean;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, forceSquareOnMobile }: ProductCardProps) {
+  const mediaClasses = `relative w-full overflow-hidden rounded-2xl bg-[#706C61]/10 ${forceSquareOnMobile ? 'aspect-square sm:aspect-auto sm:h-full sm:min-h-[300px]' : 'h-full min-h-[300px]'}`;
+
   return (
     <Link href={`/product/${product.slug}`} className="group block h-full">
-      <div className="relative h-full w-full min-h-[300px] overflow-hidden rounded-2xl bg-[#706C61]/10">
+      <div className={mediaClasses}>
         <Image
           src={product.images[0]}
           alt={product.name}

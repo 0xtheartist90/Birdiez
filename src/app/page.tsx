@@ -107,7 +107,7 @@ export default function Page() {
 
   return (
     <main>
-      <section id="home" className="section-anchor relative h-screen flex items-center justify-center section-cream overflow-hidden">
+      <section id="home" className="section-anchor relative h-screen flex items-center justify-center section-cream">
         <video
           autoPlay
           loop
@@ -124,16 +124,15 @@ export default function Page() {
           <Image
             src="/images/LOGO%20White.png"
             alt="Birdiez white logo"
-            width={440}
-            height={160}
-            className="h-32 w-auto reveal reveal-down"
+            width={640}
+            height={240}
+            className="h-48 w-auto reveal reveal-down"
             priority
           />
-          <h1 className="hero-title text-white mb-2 reveal reveal-up reveal-delay-1">
-            GOLF SHOP
-          </h1>
-          <p className="script-accent text-white mb-8 max-w-2xl mx-auto reveal reveal-up reveal-delay-2">
-            Built by players, for the community.
+          <p className="script-accent hero-subtitle text-white mb-8 mx-auto text-center reveal reveal-up reveal-delay-2">
+            <span className="block sm:hidden">Built by players</span>
+            <span className="block sm:hidden">for players</span>
+            <span className="hidden sm:inline">Built by players for players</span>
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-up reveal-delay-3">
             <Link
@@ -213,7 +212,7 @@ export default function Page() {
             subtitle="Curated for Chiang Mai golfers."
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-6">
             {shopCategories.map((category, idx) => (
               <Link
                 key={category.slug}
@@ -229,8 +228,8 @@ export default function Page() {
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-8 left-8">
-                  <h3 className="text-3xl font-black uppercase text-white tracking-tight max-w-[10ch]">
+                <div className="absolute bottom-4 inset-x-3 flex justify-center sm:justify-start">
+                  <h3 className="text-[clamp(1.05rem,4.5vw,1.35rem)] sm:text-3xl font-black uppercase text-white tracking-[0.22em] leading-tight whitespace-nowrap">
                     {category.label}
                   </h3>
                 </div>
@@ -254,7 +253,52 @@ export default function Page() {
             subtitle="Limited pieces available in store."
           />
 
-          <div className="grid gap-4 lg:gap-x-4 lg:gap-y-2 lg:grid-cols-4 lg:[grid-template-rows:repeat(4,_minmax(0,_1fr))]">
+          <div className="space-y-5 lg:hidden">
+            <div className="reveal reveal-left rounded-3xl overflow-hidden shadow-[0_25px_70px_rgba(10,10,10,0.2)] h-full min-h-[260px]">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster="/images/birdiez%20shop.png"
+                className="w-full h-full object-cover"
+              >
+                <source src="/images/golfbagbold.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            {highlightProduct && (
+              <div className="reveal reveal-right">
+                <ProductCard product={highlightProduct} />
+              </div>
+            )}
+
+            {secondaryProducts.length > 0 && (
+              <div className="grid grid-cols-2 gap-4">
+                {secondaryProducts.slice(0, 4).map((product, idx) => (
+                  <div key={product.id} className={`reveal reveal-up ${idx === 1 ? 'reveal-delay-1' : ''} ${idx === 2 ? 'reveal-delay-2' : ''} ${idx === 3 ? 'reveal-delay-3' : ''}`}>
+                    <ProductCard product={product} forceSquareOnMobile />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {bagFeatureProducts.length > 0 ? (
+              <div className="grid grid-cols-2 gap-4">
+                {bagFeatureProducts.slice(0, 2).map((product, idx) => (
+                  <div key={product.id} className={`reveal reveal-up ${idx ? 'reveal-delay-2' : 'reveal-delay-1'}`}>
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="reveal reveal-up rounded-2xl border border-dashed border-white/30 p-6 text-center text-sm text-white/70">
+                Bag products coming soon.
+              </div>
+            )}
+          </div>
+
+          <div className="hidden lg:grid gap-4 lg:gap-x-4 lg:gap-y-2 lg:grid-cols-4 lg:[grid-template-rows:repeat(4,_minmax(0,_1fr))]">
             <div className="reveal reveal-left rounded-3xl overflow-hidden shadow-[0_25px_70px_rgba(10,10,10,0.2)] h-full min-h-[260px] lg:col-span-2 lg:row-span-3">
               <video
                 autoPlay
@@ -327,13 +371,13 @@ export default function Page() {
           </div>
 
           <div className="rounded-3xl shadow-[0_25px_70px_rgba(10,10,10,0.25)] bg-[#EFE9DC]/10 p-3 reveal reveal-right reveal-delay-6">
-            <div className="relative rounded-2xl overflow-hidden h-[420px] md:h-[520px] group">
+            <div className="relative rounded-2xl overflow-hidden min-h-[320px] sm:min-h-[420px] lg:h-[520px] group">
               <Image
                 src="/images/birdiez%20shop.png"
                 alt="Inside the Birdiez shop"
                 width={720}
                 height={520}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain sm:object-cover"
                 priority
               />
               <video
@@ -341,7 +385,7 @@ export default function Page() {
                 loop
                 muted
                 playsInline
-                className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 hidden sm:block group-hover:opacity-100"
               >
                 <source src="/images/birdiezshop.webm" type="video/webm" />
               </video>
@@ -396,7 +440,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="location" className="section-anchor section-cream cream-overlay pt-0 pb-0">
+      <section id="location" className="section-anchor section-cream cream-overlay pt-0 pb-16 lg:pb-0">
         <div className="reveal reveal-scale">
           <div className="w-full aspect-[24/9] lg:aspect-[24/7] overflow-hidden rounded-none">
             <video
